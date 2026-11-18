@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tess_sso"
+version = "0.1.0"
+description = "Photometry of asteroids in TESS full-frame images"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy",
+    "scipy",
+    "astropy",
+    "astroquery",
+    "requests",
+    "pyvo",
+    "boto3",
+    "tesscube>=1.2,<2",
+    "tesswcs",
+    "lkprf",
+    "lkspacecraft",
+    "truststore>=0.10",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+lightkurve = ["lightkurve"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-m 'not network and not validation'"
+markers = [
+    "network: downloads from MAST; run with -m network",
+    "validation: the phase 10 validation on real data (~0.9 GB, reference files from binaries); run with -m validation",
+]
